@@ -102,14 +102,23 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
 .cabeca{display:flex;flex-direction:column;gap:16px;max-width:680px;margin-bottom:clamp(32px,4.5vw,56px)}
 
 /* botões e links de ação */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border-radius:999px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition:background-color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border-radius:999px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition-property:background-color,scale;transition-duration:.15s;transition-timing-function:ease-out;-webkit-tap-highlight-color:transparent}
 .btn svg{flex:none}
 .btn-laranja{background:var(--laranja);color:#FFF8F2}
-.btn-laranja:hover{background:var(--laranja-hover)}
 .btn-claro{background:var(--papel);color:var(--tinta)}
-.btn-claro:hover{background:#E3D9B8}
 .link{display:inline-flex;align-items:center;min-height:44px;font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
-.link:hover{text-decoration-thickness:2px}
+@media (prefers-reduced-motion:no-preference){.btn:active{scale:.96}}
+/* hover só com mouse/trackpad: no toque ele "gruda" depois do toque */
+@media (hover:hover){
+  .btn-laranja:hover{background:var(--laranja-hover)}
+  .btn-claro:hover{background:#E3D9B8}
+  .link:hover{text-decoration-thickness:2px}
+  .menu a:hover,.rodape nav a:hover{color:var(--ouro-claro)}
+  .posts a:hover span:not(.sr){text-decoration:underline;text-underline-offset:4px}
+}
+/* contorno neutro nas fotos de conteúdo */
+.consultas-foto img,.posts img{outline:1px solid oklch(0 0 0 / 0.1);outline-offset:-1px}
+.sobre-grid > img{outline:1px solid oklch(1 0 0 / 0.1);outline-offset:-1px}
 .nota{font-size:14px;color:var(--texto3)}
 
 /* cabeçalho */
@@ -123,8 +132,8 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
 .menu-btn .fechar,.menu-btn[aria-expanded="true"] .abrir{display:none}
 .menu-btn[aria-expanded="true"] .fechar{display:block}
 .menu{list-style:none;margin:0;padding:0}
-.menu a{text-decoration:none;color:#E7E1D4}
-.menu a:hover{color:var(--ouro-claro)}
+.menu a{text-decoration:none;color:#E7E1D4;transition:color .15s}
+.menu a[aria-current]{color:var(--ouro-claro);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
 .btn-topo{min-height:44px;padding:10px 16px;font-size:15px;gap:8px}
 @media (max-width:899px){
   .marca-sub{display:none}
@@ -200,14 +209,14 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
 @media (max-width:420px){.ficha div{grid-template-columns:1fr}}
 
 /* abordagem */
-.principios{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px clamp(20px,3vw,40px)}
-.principios div{display:flex;flex-direction:column;gap:10px;padding-top:20px;border-top:1px solid var(--tinta)}
-.principios h3{font-size:24px;font-weight:500;letter-spacing:-0.01em}
-.principios p{font-size:16px;color:var(--texto2);text-wrap:pretty}
+/* 2×2 com títulos maiores, para não repetir a grade de 4 colunas do "Como funciona" */
+.principios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,4vw,56px) clamp(32px,6vw,96px)}
+.principios div{display:flex;flex-direction:column;gap:12px;padding-top:24px;border-top:1px solid var(--tinta)}
+.principios h3{font-size:clamp(26px,2.8vw,36px);line-height:1.1}
+.principios p{font-size:17px;color:var(--texto2);max-width:30em;text-wrap:pretty}
 .balanca{margin-top:clamp(32px,4vw,48px);padding:20px 0;border-block:1px solid var(--linha);font-family:'Newsreader',serif;font-size:clamp(20px,2.2vw,26px);line-height:1.4;color:var(--oliva);text-wrap:pretty}
 .balanca strong{font-weight:500}
-@media (max-width:899px){.principios{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:559px){.principios{grid-template-columns:1fr;gap:24px}}
+@media (max-width:559px){.principios{grid-template-columns:1fr;gap:28px}}
 
 .insta{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:minmax(0,0.75fr) minmax(0,1.25fr);gap:24px clamp(24px,4vw,56px);align-items:start}
 .insta-cab{display:flex;flex-direction:column;gap:12px}
@@ -217,7 +226,6 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
 .posts a{display:flex;flex-direction:column;gap:10px;text-decoration:none}
 .posts img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;background:var(--areia)}
 .posts span:not(.sr){font-family:'Newsreader',serif;font-size:19px;line-height:1.25}
-.posts a:hover span:not(.sr){text-decoration:underline;text-underline-offset:4px}
 @media (max-width:899px){.insta{grid-template-columns:1fr}.posts{grid-auto-columns:minmax(200px,62%)}}
 
 /* dúvidas */
@@ -247,7 +255,6 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
 .rodape .marca-nome{font-size:20px;color:var(--creme)}
 .rodape nav{display:flex;gap:8px}
 .rodape nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:#E7E1D4;text-underline-offset:4px}
-.rodape nav a:hover{color:var(--ouro-claro)}
 </style>
 </head>
 <body>
@@ -271,7 +278,7 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
       </ul>
     </nav>
     <a class="btn btn-claro btn-topo" href="https://w.app/nutritna" target="_blank" rel="noopener" data-wa="geral">
-      <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       <span>Agendar<span class="so-largo"> pelo WhatsApp</span><span class="sr"> (abre em nova aba)</span></span>
     </a>
   </div>
@@ -290,7 +297,7 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
         </ul>
         <div class="acoes">
           <a class="btn btn-laranja" href="https://w.app/nutritna" target="_blank" rel="noopener" data-wa="geral">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             Agendar pelo WhatsApp<span class="sr"> (abre em nova aba)</span>
           </a>
           <a class="link" href="#como-funciona">Como funciona a consulta</a>
@@ -467,7 +474,7 @@ section[id]{scroll-margin-top:calc(var(--topo) + 8px)}
       <h2>Você não precisa passar por isso <em>sozinha.</em></h2>
       <p>Me chama e vamos montar o seu plano alimentar — de forma leve, duradoura e de verdade.</p>
       <a class="btn btn-claro" href="https://w.app/nutritna" target="_blank" rel="noopener" data-wa="geral">
-        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 0 0-6.5 11.2L2.5 17.5l3.9-1A7.5 7.5 0 1 0 10 2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
         Agendar pelo WhatsApp<span class="sr"> (abre em nova aba)</span>
       </a>
       <p class="nota">Prefere o Instagram? <a href="https://ig.me/m/mirandataina.nutri" target="_blank" rel="noopener">Mande uma mensagem por lá<span class="sr"> (abre em nova aba)</span></a></p>
@@ -497,6 +504,14 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && botao.getAttribute('aria-expanded') === 'true') { abrir(false); botao.focus(); }
 });
 document.addEventListener('click', (e) => { if (!e.target.closest('.topo')) abrir(false); });
+
+// Marca no menu a seção que está no meio da tela.
+const links = [...menu.querySelectorAll('a')];
+const espiao = new IntersectionObserver((itens) => itens.forEach((item) => {
+  if (!item.isIntersecting) return;
+  links.forEach((a) => a.hash === '#' + item.target.id ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
+}), { rootMargin: '-45% 0px -50% 0px' });
+document.querySelectorAll('main section[id]').forEach((s) => espiao.observe(s));
 
 // WhatsApp: com o número confirmado (só dígitos, com 55 e DDD), cada botão abre com a mensagem certa.
 // Vazio = mantém o link curto da bio (w.app/nutritna).
