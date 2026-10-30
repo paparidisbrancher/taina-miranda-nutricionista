@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paparidisbrancher.github.io/taina-miranda-nutricionista/sitemap.xml
